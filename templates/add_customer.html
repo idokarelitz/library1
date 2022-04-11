@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<!--pup up message-->
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>
+        {{ message }}
+    </strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+
+{% if name %}
+<h1>Customer Added!</h1>
+<br/><br/><br/>
+<table class="table table-hover table-success table-bordered table-striped">
+	{% for our_customer in our_customers%}
+<tr>
+<td>{{ our_customer.id }}. <a href="{{ url_for('Update', id=our_customer.id) }}">{{ our_customer.name }}</a>-{{ our_customer.city }}-{{ our_customer.age }}<a href="{{ url_for('delete', id=our_customer.id) }}">Delete</a></td>
+</tr>
+{% endfor %}
+</table>
+
+{% else %}
+<h1>Customer List:</h1>
+	<br/>
+<div class="shadow p-3 mb-5 bg-body rounded text-dark">
+	<form  method="POST">
+		{{ form.hidden_tag() }}
+
+		{{ form.name.label(class="form-label") }}
+
+		{{ form.name(class="form-control") }}
+		<br/>
+		{{ form.city.label(class="form-label") }}
+
+		{{ form.city(class="form-control") }}
+		<br/>
+		{{ form.age.label(class="form-label") }}
+
+		{{ form.age(class="form-control") }}
+		<br/>
+		{{ form.submit(class="btn btn-secondary") }}
+
+
+	</form>
+</div>
+	<br/><br/><br/>
+<table class="table table-hover table-success table-bordered table-striped">
+	{% for our_customer in our_customers%}
+<tr>
+<td>{{ our_customer.id }}.<a href="{{ url_for('Update', id=our_customer.id) }}">{{ our_customer.name }}-</a>{{ our_customer.city }}-{{ our_customer.age }} <a href="{{ url_for('delete', id=our_customer.id) }}">Delete</a></td>
+</tr>
+{% endfor %}
+</table>
+
+{% endif %}
+
+
+{% endblock %}
