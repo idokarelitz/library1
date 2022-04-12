@@ -13,6 +13,10 @@ app = Flask(__name__)
 
 #add database sqlite
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///customers.db'
+
+app.config['SQLALCHEMY_BINDS'] = { 'books' : 'sqlite:///books.db' }
+
+
 #create a secret key (csrf token)
 app.config['SECRET_KEY'] = "idokar"
 #initialize the database
@@ -111,6 +115,7 @@ def delete(id):
 ########################################################################
 #create model for books
 class Books(db.Model):
+    __bind_key__ = 'books'
     id             = db.Column(db.Integer, primary_key=True)
     name           = db.Column(db.String(200), nullable=False, unique=True)
     author         = db.Column(db.String(200), nullable=False)
