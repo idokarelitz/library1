@@ -5,50 +5,51 @@
 <!--pup up message-->
 {% for message in get_flashed_messages() %}
 <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    <strong>
-        {{ message }}
-    </strong>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	<strong>
+		{{ message }}
+	</strong>
+	<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 {% endfor %}
 
 {% if name %}
 <h1>Update Customer!</h1>
-<br/><br/><br/>
+<br /><br /><br />
 <table class="table table-hover table-success table-bordered table-striped">
 	{% for our_customer in our_customers%}
-<tr>
-<td>{{ our_customer.id }}-{{ our_customer.name }}-{{ our_customer.city }}-{{ our_customer.age }}</td>
-</tr>
-{% endfor %}
+	<tr>
+		<td>{{ our_customer.id }}-{{ our_customer.name }}-{{ our_customer.city }}-{{ our_customer.age }}</td>
+	</tr>
+	{% endfor %}
 </table>
 
 {% else %}
 <h1>Update User...</h1>
-	<br/>
+<br />
 <div class="shadow p-3 mb-5 bg-body rounded text-dark">
-	<form  action="/update/{{ name_to_update.id }}" method="POST">
+	<form action="/update_customer/{{ name_to_update.id }}" method="POST">
 		{{ form.hidden_tag() }}
 
 		{{ form.name.label(class="form-label") }}
 
 		{{ form.name(class="form-control", value=name_to_update.name) }}
-		<br/>
+		<br />
 		{{ form.city.label(class="form-label") }}
 
 		{{ form.city(class="form-control", value=name_to_update.city) }}
-		<br/>
+		<br />
 		{{ form.age.label(class="form-label") }}
 
 		{{ form.age(class="form-control", value=name_to_update.age) }}
-		<br/>
+		<br />
 		{{ form.submit(class="btn btn-secondary") }}
 
-        <a href="{{ url_for('delete', id=id) }}" class="btn btn-danger">Delete</a>
-        
+		<a href="{{ url_for('delete', id=id) }}" class="btn btn-danger">Delete</a>
+
+		<a href="{{ url_for('index') }}" class="btn btn-success">Main Page</a>
 	</form>
 </div>
-	<br/><br/><br/>
+
 
 
 {% endif %}

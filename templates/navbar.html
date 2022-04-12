@@ -1,9 +1,8 @@
-
-
-<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">
-            <img src="\static\images\logo_main.svg" alt="" width="30" height="30" class="d-inline-block align-text-top" />
+            <img src="\static\images\logo_main.svg" alt="" width="30" height="30"
+                class="d-inline-block align-text-top" />
 
         </a>
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -12,18 +11,16 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link " href="{{ url_for('add_customer')}}">CUSTOMERS</a>
-              </li>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="{{ url_for('add_customer')}}">BOOKS</a>
+            </li>
         </ul>
     </div>
 </nav>
 
 
 <!-- FOOTER -->
-<footer class="fixed-bottom bg-dark text-center text-lg-start">
-    <!-- Copyright -->
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-      © 2022 Copyright: IDO KARELITZ
-     
-    </div>
-    <!-- Copyright -->
-  </footer>
+<footer class="fixed-bottom bg-transparent text-center text-lg-start">
+    <h1><a href="/about" class="badge badge-danger badge-primary bg-dark">© 2022 Copyright: IDO KARELITZ</a></h1>
+</footer>

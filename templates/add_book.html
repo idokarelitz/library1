@@ -1,0 +1,102 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<!--pup up message-->
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>
+        {{ message }}
+    </strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+
+{% if name %}
+<h1>Book Added!</h1>
+<br /><br /><br />
+<table class="table table-hover table-success table-bordered border-primary table-striped">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">NAME</th>
+            <th scope="col">AUTHOR</th>
+            <th scope="col">YEAR PUBLISHED</th>
+            <th scope="col">BOOK TYPE</th>
+            <th scope="col">DELETE</th>
+        </tr>
+    </thead>
+    {% for our_book in our_books%}
+    <tr>
+        <tbody>
+            <th scope="row">{{ our_book.id }}</th>
+            <td><a href="{{ url_for('Update_book', id=our_book.id) }}">{{ our_book.name }}</a></td>
+            <td>{{ our_book.author }}</td>
+            <td>{{ our_book.year_published }}</td>
+            <td>{{ our_book.book_type }}</td>
+            <td><a href="{{ url_for('delete_book', id=our_book.id) }}">Delete</a></td>
+    </tr>
+    </tbody>
+
+    {% endfor %}
+</table>
+{% else %}
+<h1>Create New Book:</h1>
+<br />
+<div class="shadow p-3 mb-5 bg-body rounded text-dark">
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        {{ form.name.label(class="form-label") }}
+
+        {{ form.name(class="form-control") }}
+        <br />
+        {{ form.author.label(class="form-label") }}
+
+        {{ form.author(class="form-control") }}
+        <br />
+        {{ form.year_published.label(class="form-label") }}
+
+        {{ form.year_published(class="form-control") }}
+        <br />
+        {{ form.book_type.label(class="form-label") }}
+
+        {{ form.book_type(class="form-control") }}
+        <br />
+        {{ form.submit(class="btn btn-secondary") }}
+
+        <a href="{{ url_for('index') }}" class="btn btn-success">Main Page</a>
+    </form>
+
+</div>
+<br />
+<h1>For Update/Delete Select Book Name: </h1>
+<table class="table table-hover table-success table-bordered border-primary table-striped">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">NAME</th>
+            <th scope="col">AUTHOR</th>
+            <th scope="col">YEAR PUBLISHED</th>
+            <th scope="col">BOOK TYPE</th>
+
+        </tr>
+    </thead>
+    {% for our_book in our_books%}
+    <tr>
+        <tbody>
+            <th scope="row">{{ our_book.id }}</th>
+            <td><a href="{{ url_for('Update_book', id=our_book.id) }}">{{ our_book.name }}</a></td>
+            <td>{{ our_book.city }}</td>
+            <td>{{ our_book.age }}</td>
+
+    </tr>
+    </tbody>
+
+    {% endfor %}
+</table>
+
+{% endif %}
+
+
+{% endblock %}

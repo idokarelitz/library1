@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<!--pup up message-->
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+	<strong>
+		{{ message }}
+	</strong>
+	<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+
+{% if name %}
+<h1>Update Book!</h1>
+<br /><br /><br />
+<table class="table table-hover table-success table-bordered table-striped">
+	{% for our_book in our_books%}
+	<tr>
+		<td>{{ our_book.id }}-{{ our_book.name }}-{{ our_book.author }}-{{ our_book.year_published }}-{{ our_book.book_type }}</td>
+	</tr>
+	{% endfor %}
+</table>
+
+{% else %}
+<h1>Update Book!</h1>
+<br />
+<div class="shadow p-3 mb-5 bg-body rounded text-dark">
+	<form action="/update_book/{{ name_to_update.id }}" method="POST">
+		{{ form.hidden_tag() }}
+
+		{{ form.name.label(class="form-label") }}
+
+		{{ form.name(class="form-control", value=name_to_update.name) }}
+		<br />
+		{{ form.city.label(class="form-label") }}
+
+		{{ form.city(class="form-control", value=name_to_update.city) }}
+		<br />
+		{{ form.author.label(class="form-label") }}
+
+		{{ form.author(class="form-control", value=name_to_update.author) }}
+		<br />
+        {{ form.year_published.label(class="form-label") }}
+
+		{{ form.year_published(class="form-control", value=name_to_update.year_published) }}
+		<br />
+        {{ form.book_type.label(class="form-label") }}
+
+		{{ form.book_type(class="form-control", value=name_to_update.book_type) }}
+		<br />
+		{{ form.submit(class="btn btn-secondary") }}
+
+		<a href="{{ url_for('delete_book', id=id) }}" class="btn btn-danger">Delete</a>
+
+		<a href="{{ url_for('index') }}" class="btn btn-success">Main Page</a>
+	</form>
+</div>
+
+
+
+{% endif %}
+
+
+{% endblock %}
