@@ -15,7 +15,8 @@
 {% if name %}
 <h1>Book Added!</h1>
 <br /><br /><br />
-<table class="table table-hover table-success table-bordered border-primary table-striped">
+<div class="table-responsive"></div>
+<table class="table table-hover table-success table-bordered table-striped">
     <thead>
         <tr>
             <th scope="col">ID</th>
@@ -40,6 +41,7 @@
 
     {% endfor %}
 </table>
+</div>
 {% else %}
 <h1>Create New Book:</h1>
 <br />
@@ -87,8 +89,11 @@
         <tbody>
             <th scope="row">{{ our_book.id }}</th>
             <td><a href="{{ url_for('Update_book', id=our_book.id) }}">{{ our_book.name }}</a></td>
-            <td>{{ our_book.city }}</td>
-            <td>{{ our_book.age }}</td>
+            <td>{{ our_book.author }}</td>
+            <td>{{ our_book.year_published }}</td>
+            <td>{{ our_book.book_type }}</td>
+            
+    
 
     </tr>
     </tbody>

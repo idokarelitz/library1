@@ -12,9 +12,9 @@ app = Flask(__name__)
 
 
 #add database sqlite
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///customers.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///library.db'
 
-app.config['SQLALCHEMY_BINDS'] = { 'books' : 'sqlite:///books.db' }
+
 
 
 #create a secret key (csrf token)
@@ -115,13 +115,12 @@ def delete(id):
 ########################################################################
 #create model for books
 class Books(db.Model):
-    __bind_key__ = 'books'
     id             = db.Column(db.Integer, primary_key=True)
     name           = db.Column(db.String(200), nullable=False, unique=True)
     author         = db.Column(db.String(200), nullable=False)
     year_published = db.Column(db.Integer, nullable=False)
     book_type      = db.Column(db.Integer, nullable=False)
-    date_added     = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    
  
  
 #create a form class book
@@ -150,7 +149,7 @@ def add_book():
         form.year_published.data=''
         form.book_type.data=''
         flash("Book Added Successfully!")
-    our_books=Books.query.order_by(Books.date_added)
+    our_books=Books.query.order_by(Books.id)
     return render_template("add_book.html", form=form, name=name, our_books=our_books)
 
 
@@ -172,7 +171,7 @@ def Update_book(id):
             form.year_published.data=''
             form.book_type.data=''
             flash('Book Updated Successfully!')
-            our_books=Books.query.order_by(Books.date_added)
+            our_books=Books.query.order_by(Books.id)
             return render_template("add_book.html", form=form, name=name, our_books=our_books)
         except:
             flash('Error! Try Again')
@@ -190,7 +189,7 @@ def delete_book(id):
         db.session.delete(book_to_delete)
         db.session.commit()
         flash('Book Deleted Successfully!')   
-        our_books=Books.query.order_by(Books.date_added)
+        our_books=Books.query.order_by(Books.id)
         return render_template("add_book.html", form=form, name=name, our_books=our_books)
     except:
         flash('Error! Try Again')
