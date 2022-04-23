@@ -1,0 +1,101 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<!--pup up message-->
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>
+    {{ message }}
+  </strong>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+
+{% if id %}
+<h1>books issued</h1>
+<br /><br /><br />
+<table class="table w-50 table-hover table-success table-bordered border-primary table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">CUSTOMER ID</th>
+      <th scope="col">BOOK ID</th>
+      <th scope="col">ISSUE DATE</th>
+      <th scope="col">RETURN DATE</th>
+    </tr>
+  </thead>
+  {% for our_issues in our_issues%}
+  <tr>
+    <tbody>
+      <th scope="row">{{ our_issues.id }}</th>
+      <td>{{ our_issues.customerid }}</td>
+      <td>{{ our_issues.bookid }}</td>
+      <td>{{ our_issues.issue_date }}</td>
+      <td>{{ our_issues.return_date }}</td>
+  </tr>
+  </tbody>
+  {% endfor %}
+
+</table>
+{% else %}
+<h1>Create New Customer:</h1>
+<br />
+<div class="shadow w-50 p-3 mb-5 bg-body rounded text-dark">
+  <form method="POST">
+    {{ form.hidden_tag() }}
+
+    {{ form.customerid.label(class="form-label") }}
+
+    {{ form.customerid(class="form-control") }}
+    <br />
+    {{ form.bookid.label(class="form-label") }}
+
+    {{ form.bookid(class="form-control") }}
+    <br />
+    {{ form.issue_date.label(class="form-label") }}
+
+    {{ form.issue_date(class="form-control") }}
+    <br />
+    {{ form.return_date.label(class="form-label") }}
+
+    {{ form.return_date(class="form-control") }}
+    <br />
+    {{ form.submit(class="btn btn-secondary") }}
+
+    <a href="{{ url_for('index') }}" class="btn btn-success">Main Page</a>
+  </form>
+
+</div>
+<br />
+<h1>list of issued books </h1>
+<table class="table w-50 table-hover table-success table-bordered border-primary table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">CUSTOMER ID</th>
+      <th scope="col">BOOK ID</th>
+      <th scope="col">ISSUE DATE</th>
+      <th scope="col">RETURN DATE</th>
+      
+    </tr>
+  </thead>
+  {% for our_issues in our_issues%}
+  <tr>
+    <tbody>
+      <th scope="row">{{ our_issues.id }}</th>
+      <td>{{ our_issues.customerid }}</td>
+      <td>{{ our_issues.bookid }}</td>
+      <td>{{ our_issues.issue_date }}</td>
+      <td>{{ our_issues.return_date }}</td>
+      
+  </tr>
+  </tbody>
+  
+  {% endfor %}
+</table>
+
+{% endif %}
+
+
+{% endblock %}

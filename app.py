@@ -1,11 +1,11 @@
 import datetime
 from flask import Flask, render_template, flash, request, redirect, url_for
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, IntegerField 
+from wtforms import StringField, SubmitField, IntegerField, DateField 
 from wtforms.validators import DataRequired, EqualTo, Length
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-
+from wtforms_sqlalchemy.fields import QuerySelectField
 
 # Create a Flask Instance
 app = Flask(__name__)
@@ -18,14 +18,12 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///library.db'
 
 
 #create a secret key (csrf token)
-app.config['SECRET_KEY'] = "idokar"
+app.config['SECRET_KEY'] = "vsdvlsdvdsldssdsdf"
 #initialize the database
 db= SQLAlchemy(app)
 migrate=Migrate(app, db)
 
-########################################################################
-#                             CUSTOMERS                                #
-########################################################################
+
 
 #create model for customers
 class Customers(db.Model):
@@ -34,19 +32,92 @@ class Customers(db.Model):
     city      = db.Column(db.String(200), nullable=False)
     age       = db.Column(db.String(10), nullable=False)
     date_added = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    cus_book = db.relationship("Issue_book", backref="issue", lazy=True)
     
-#create a string for model customers
     def __repr__(self):
         return '<Name %r>' % self.name
 
 
+#create model for books
+class Books(db.Model):
+    id             = db.Column(db.Integer, primary_key=True)
+    name           = db.Column(db.String(200), nullable=False, unique=True)
+    author         = db.Column(db.String(200), nullable=False)
+    year_published = db.Column(db.Integer, nullable=False)
+    book_type      = db.Column(db.Integer, nullable=False)
+    issue_book = db.relationship(
+        "Issue_book", backref=db.backref("loan", lazy=True))
+    
+  
+class Issue_book(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    customerid = db.Column(db.Integer, db.ForeignKey("customers.id"), nullable=True, default=None)
+    bookid = db.Column(db.Integer, db.ForeignKey("books.id"))
+    issue_date = db.Column(db.DateTime())
+    return_date = db.Column(db.DateTime())
+  
 #create a form class customer
 class CustomerForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     city = StringField('City', validators=[DataRequired()])
     age = StringField('Age', validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+class Customer_Search_Form(FlaskForm):
+    name = StringField('Name')
+    city = StringField('City')
+    age = StringField('Age')
+    submit = SubmitField('Submit')
+         
+       
+
+#create a form class book
+class BookForm(FlaskForm):
+    name = StringField('Name', validators=[DataRequired()])
+    author = StringField('Author', validators=[DataRequired()])
+    year_published = StringField('Year Published', validators=[DataRequired()])
+    book_type = StringField('book Type', validators=[DataRequired()])
+    submit = SubmitField('Submit')
+ 
+class IssueForm(FlaskForm):
+    customerid = IntegerField('CustomerID',validators=[DataRequired()] )
+    bookid = IntegerField('BookID',validators=[DataRequired()] )
+    issue_date = DateField('Issue date')
+    return_date = DateField('Return date')
+    submit = SubmitField('Submit')
+
+########################################################################
+#                             CUSTOMERS                                #
+########################################################################
+
+@app.route('/search_customer', methods=['GET','POST']) 
+def search_customer():
+    name=None
+    form=Customer_Search_Form()
+    if form.validate_on_submit():
+        customer = Customers.query.filter_by(name=form.name.data)
+        
+        return render_template("search_customer.html", form=form, name=name, customer=customer)       
+    else:
+        return render_template("search_customer.html", form=form)       
+
+#issue a book
+@app.route('/issue_book', methods=['GET','POST'])
+def issue_book():
+    id=None
+    form=IssueForm()
+    if form.validate_on_submit():
+        issue_book = Issue_book.query.filter_by(customerid=form.customerid.data).first()
+        if issue_book is None:
+            issue_book=Issue_book(customerid=form.customerid.data, bookid=form.bookid.data, issue_date=form.issue_date.data, return_date=form.return_date.data)
+            db.session.add(issue_book)
+            db.session.commit()
+        
+        flash("Issued book Successfully!")
+    our_issues=Issue_book.query.order_by(Issue_book.id)
+    return render_template("issue_book.html", form=form, id=id, our_issues=our_issues)
     
+
  
 #Add a Customer
 @app.route('/customer/add', methods=['GET','POST'])
@@ -113,24 +184,10 @@ def delete(id):
 ########################################################################
 #                                 BOOKS                                #
 ########################################################################
-#create model for books
-class Books(db.Model):
-    id             = db.Column(db.Integer, primary_key=True)
-    name           = db.Column(db.String(200), nullable=False, unique=True)
-    author         = db.Column(db.String(200), nullable=False)
-    year_published = db.Column(db.Integer, nullable=False)
-    book_type      = db.Column(db.Integer, nullable=False)
-    
+
  
  
-#create a form class book
-class BookForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired()])
-    author = StringField('Author', validators=[DataRequired()])
-    year_published = StringField('Year Published', validators=[DataRequired()])
-    book_type = StringField('book Type', validators=[DataRequired()])
-    submit = SubmitField('Submit')
- 
+
     
 #Add a book
 @app.route('/book/add', methods=['GET','POST'])
