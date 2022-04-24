@@ -44,9 +44,9 @@
 		<br />
 		{{ form.submit(class="btn btn-secondary") }}
 
-		<a href="{{ url_for('add_customer') }}" class="btn btn-danger">Cancel Update</a>
+		<a href="{{ url_for('customer.add_customer') }}" class="btn btn-danger">Cancel Update</a>
 
-		<a href="{{ url_for('delete', id=id) }}" class="btn btn-danger">Delete</a>
+		<a href="{{ url_for('customer.delete', id=id) }}" class="btn btn-danger">Delete</a>
 
 		<a href="{{ url_for('index') }}" class="btn btn-success">Main Page</a>
 	</form>

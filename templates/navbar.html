@@ -10,16 +10,16 @@
                 <a class="nav-link text-light" href="/about">ABOUT</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " href="{{ url_for('add_customer')}}">CUSTOMERS</a>
+                <a class="nav-link " href="{{ url_for('customer.add_customer')}}">CUSTOMERS</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " href="{{ url_for('add_book')}}">BOOKS</a>
+                <a class="nav-link " href="{{ url_for('book.add_book')}}">BOOKS</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " href="{{ url_for('issue_book')}}">ISSUE A BOOK</a>
+                <a class="nav-link " href="{{ url_for('issue.issue_book')}}">ISSUE A BOOK</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " href="{{ url_for('search_customer')}}">SEARCH CUSTOMER</a>
+                <a class="nav-link " href="{{ url_for('customer.search_customer')}}">SEARCH CUSTOMER</a>
             </li>
         </ul>
     </div>

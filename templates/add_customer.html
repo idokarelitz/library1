@@ -29,15 +29,13 @@
   <tr>
     <tbody>
       <th scope="row">{{ our_customer.id }}</th>
-      <td><a href="{{ url_for('Update_customer', id=our_customer.id) }}">{{ our_customer.name }}</a></td>
+      <td><a href="{{ url_for('customer.Update_customer', id=our_customer.id) }}">{{ our_customer.name }}</a></td>
       <td>{{ our_customer.city }}</td>
       <td>{{ our_customer.age }}</td>
-      <td><a href="{{ url_for('delete', id=our_customer.id) }}">Delete</a></td>
+      <td><a href="{{ url_for('customer.delete', id=our_customer.id) }}">Delete</a></td>
   </tr>
   </tbody>
-  <!--<tr>
-<td>{{ our_customer.id }}.<a href="{{ url_for('Update_customer', id=our_customer.id) }}">{{ our_customer.name }}-</a>{{ our_customer.city }}-{{ our_customer.age }} <a href="{{ url_for('delete', id=our_customer.id) }}">Delete</a></td>
-</tr>-->
+  
   {% endfor %}
 </table>
 {% else %}
@@ -81,15 +79,13 @@
   <tr>
     <tbody>
       <th scope="row">{{ our_customer.id }}</th>
-      <td><a href="{{ url_for('Update_customer', id=our_customer.id) }}">{{ our_customer.name }}</a></td>
+      <td><a href="{{ url_for('customer.Update_customer', id=our_customer.id) }}">{{ our_customer.name }}</a></td>
       <td>{{ our_customer.city }}</td>
       <td>{{ our_customer.age }}</td>
       
   </tr>
   </tbody>
-  <!--<tr>
-<td>{{ our_customer.id }}.<a href="{{ url_for('Update_customer', id=our_customer.id) }}">{{ our_customer.name }}-</a>{{ our_customer.city }}-{{ our_customer.age }} <a href="{{ url_for('delete', id=our_customer.id) }}">Delete</a></td>
-</tr>-->
+  
   {% endfor %}
 </table>
 
