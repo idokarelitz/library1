@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, render_template, request
 
-from forms import BookForm
+from forms import BookForm, SearchForm
 from mydb import db
 from models import Books
 book = Blueprint('book',__name__, url_prefix='/book')
@@ -68,4 +68,5 @@ def delete_book(id):
     except:
         flash('Error! Try Again')
         return render_template("add_book.html", form=form, name=name, our_books=our_books)
+
 

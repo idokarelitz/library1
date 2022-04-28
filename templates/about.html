@@ -1,14 +1,24 @@
 {% extends 'layout.html' %}
 
 
-{% block title %}
+{% block title %}{% endblock %}
 
+{% block content %}
+
+<div class="portfolio-section">
+    <div class="tagline-left">
+      <div class="tagline-left-text">Serving the waters that serve our state.</div>
+      <video autoplay muted loop class="tagline-video">
+        <source src="http://www.bigcom.com/assets/2014/10/asmc_bg2.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="tagline-right">
+      <div class="tagline-right-text">The future is for workers</div>
+      <video autoplay muted loop class="tagline-video">
+        <source src="http://www.bigcom.com/assets/2014/08/GoBuildAlabama.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
 
 {% endblock %}
-{% block body %}
 
-
-    
-
-
-{% endblock %}

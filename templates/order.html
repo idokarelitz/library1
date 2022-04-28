@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+
+
+{% block title %}{% endblock %}
+
+{% block content %}
+
+<div class="w-50 shadow p-3 mb-5 bg-body rounded text-dark">
+<form action="order" method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.customerid.label(class="form-label") }}
+
+    {{ form.customerid(class="form-control") }}
+    <br />
+    {{ form.bookid.label(class="form-label") }}
+
+    {{ form.bookid(class="form-control") }}
+    <br />
+    {{ form.issue_date.label(class="form-label") }}
+
+    {{ form.issue_date(class="form-control") }}
+    <br />
+    {{ form.return_date.label(class="form-label") }}
+
+    {{ form.return_date(class="form-control") }}
+    <br />
+    
+    {{ form.submit(class="btn btn-secondary") }}
+
+
+
+</form>
+
+</div>
+{% endblock %}

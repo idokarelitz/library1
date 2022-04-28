@@ -1,8 +1,8 @@
 from flask import Blueprint, flash, render_template, request
 
-from forms import CustomerForm,Customer_Search_Form, IssueForm
+from forms import CustomerForm,Customer_Search_Form
 from mydb import db
-from models import Customers, Issue_book
+from models import Customers
 customer = Blueprint('customer',__name__, url_prefix='/customer')
 
 

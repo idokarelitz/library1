@@ -25,6 +25,8 @@ class Books(db.Model):
     issue_book = db.relationship(
         "Issue_book", backref=db.backref("loan", lazy=True))
     
+    def __repr__(self):
+        return '<Name %r>' % self.name
   
 class Issue_book(db.Model):
     id = db.Column(db.Integer, primary_key=True)

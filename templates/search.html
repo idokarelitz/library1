@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+
+{% block title %}{% endblock %}
+
+{% block content %}
+<br/>
+<!--
+<h2>You Searched For</h2>
+<p> {{ searched }} </p>
+<br/>
+{% for customer in customers %}
+    {{ customer.name }}<br/>
+    {{ customer.city }}<br/>
+    {{ customer.age }}<br/>
+{% endfor%}
+-->
+<h1>You Searched For</h1>
+<br /><br /><br />
+<div class="table-responsive"></div>
+<table class="table w-50 table-hover table-success table-bordered border-primary table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">NAME</th>
+      <th scope="col">CITY</th>
+      <th scope="col">AGE</th>
+      <th scope="col">DELETE</th>
+    </tr>
+  </thead>
+  {% for customer in customers %}
+  <tr>
+    <tbody>
+      <th scope="row">{{ customer.id }}</th>
+      <td><a href="{{ url_for('customer.Update_customer', id=customer.id) }}">{{ customer.name }}</a></td>
+      <td>{{ customer.city }}</td>
+      <td>{{ customer.age }}</td>
+      <td><a href="{{ url_for('customer.delete', id=customer.id) }}">Delete</a></td>
+  </tr>
+  </tbody>
+</div>
+{% endfor%}
+{% endblock %}
+

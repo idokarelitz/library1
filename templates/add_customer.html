@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% block body %}
+{% block content %}
 
 <!--pup up message-->
 {% for message in get_flashed_messages() %}
@@ -15,6 +15,7 @@
 {% if name %}
 <h1>Customer Added!</h1>
 <br /><br /><br />
+<div class="table-responsive"></div>
 <table class="table w-50 table-hover table-success table-bordered border-primary table-striped">
   <thead>
     <tr>
@@ -35,7 +36,7 @@
       <td><a href="{{ url_for('customer.delete', id=our_customer.id) }}">Delete</a></td>
   </tr>
   </tbody>
-  
+</div>
   {% endfor %}
 </table>
 {% else %}

@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+
+{% block title %}{% endblock %}
+
+{% block content %}
+<h1>You Searched For</h1>
+<br /><br /><br />
+<div class="table-responsive"></div>
+<table class="table w-50 table-hover table-success table-bordered border-primary table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">NAME</th>
+      <th scope="col">AUTHOR</th>
+      <th scope="col">YEAR PUBLISHED</th>
+      <th scope="col">DELETE</th>
+    </tr>
+  </thead>
+  {% for book in books %}
+  <tr>
+    <tbody>
+      <th scope="row">{{ book.id }}</th>
+      <td><a href="{{ url_for('book.Update_book', id=book.id) }}">{{ book.name }}</a></td>
+      <td>{{ book.author }}</td>
+      <td>{{ book.year_published }}</td>
+      <td><a href="{{ url_for('book.delete_book', id=book.id) }}">Delete</a></td>
+  </tr>
+  </tbody>
+</div>
+{% endfor%}
+{% endblock %}
+

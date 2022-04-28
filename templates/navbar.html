@@ -19,14 +19,29 @@
                 <a class="nav-link " href="{{ url_for('issue.issue_book')}}">ISSUE A BOOK</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " href="{{ url_for('customer.search_customer')}}">SEARCH CUSTOMER</a>
+                <a class="nav-link " href="{{ url_for('order')}}">ORDER</a>
             </li>
+            
         </ul>
     </div>
+    <form method="POST" action="{{ url_for('search')}}" class="d-flex">
+        {{ form.hidden_tag() }}
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search", name="searched">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">customers</button>
+      </form>
+      <br/>
+      <form method="POST" action="{{ url_for('search_book')}}" class="d-flex">
+        {{ form.hidden_tag() }}
+        <input class="form-control mr-sm-2" type="search" placeholder="Search", name="searched2">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">books</button>
+      </form>
 </nav>
 
 
 <!-- FOOTER -->
 <footer class="fixed-bottom bg-transparent text-center text-lg-start">
-    <h1><a href="/about" class="badge badge-danger badge-primary bg-dark">© 2022 Copyright: IDO KARELITZ</a></h1>
+    <h3><a href="/about" class="badge badge-danger badge-primary bg-dark">© 2022 Copyright: IDO KARELITZ</a></h3>
+
+
+    
 </footer>
