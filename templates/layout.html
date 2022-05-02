@@ -18,25 +18,14 @@
 
 
 
-  <!--
-  <style>
-    body {
-      background-image: url("static/images/books_bg.jpg");
-      height: 500px;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      position: relative;
-    }
-  </style>
--->
+
 
 </head>
-<body class="bg bg-dark">
+<body class="">
   <!-- -->
   {% include 'navbar.html' %}
   {% block title %}{% endblock %}
-  {% block content %}{% endblock %} 
+  {% block body %}{% endblock %} 
  
   <!--custom css if needed-->
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" /> 

@@ -1,11 +1,12 @@
-from flask import Flask, render_template, flash
-from datetime import timedelta
+from flask import Flask, render_template, flash, redirect, url_for
+from flask_login import login_user, LoginManager, login_required, logout_user, current_user
+from werkzeug.security import check_password_hash 
+
 from mydb import db, migrate
 from customer import customer
 from book import book
-from issue import issue
-from forms import SearchForm, Search2Form, ChoiceForm
-from models import Customers, Books, Issue_book
+from forms import SearchForm, Search2Form, OrderForm, LoginForm
+from models import Customers, Books, Orders
 # Create a Flask Instance
 app = Flask(__name__)
 #add database sqlite
@@ -20,7 +21,15 @@ migrate.init_app(app, db)
 
 app.register_blueprint(customer)
 app.register_blueprint(book)
-app.register_blueprint(issue)
+
+#flask login required
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+@login_manager.user_loader
+def load_customer(customer_id):
+    return Customers.query.get(int(customer_id))
 
 #pass to nevbar
 @app.context_processor
@@ -32,8 +41,64 @@ def base():
     form=Search2Form()
     return dict(form=form)
 
+
+@app.route('/order', methods=['GET','POST'])
+@login_required
+def order():
+    id=None
+    form=OrderForm()
+    
+    if form.validate_on_submit():
+        issue_book = Orders.query.filter_by(book=form.book_id.data).first()
+        if issue_book is None:
+            issued_by = current_user.id
+            
+            issue_book=Orders(issued_by=issued_by, date_issued=form.date_issued.data, date_return=form.date_return.data, book=form.book_id.data)
+            db.session.add(issue_book)
+            db.session.commit()
+        
+        flash("Issued book Successfully!")
+    our_issues=Orders.query.order_by(Orders.date_issued)
+    return render_template("order.html", form=form, id=id, our_issues=our_issues)
+    
+
+#create login page
+@app.route('/login', methods=['GET','POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        customer = Customers.query.filter_by(username=form.username.data).first()
+        if customer:
+            #check the hash
+            if check_password_hash(customer.password_hash, form.password.data):
+                login_user(customer)
+                
+                return redirect(url_for('dashboard'))
+            else:
+                flash("Wrong Password - Try Again")    
+        else:
+            flash("That Customer Doesn't Exist")
+    return render_template('login.html', form=form)
+
+#create logout function
+@app.route('/logout', methods=['GET','POST'])
+@login_required
+def logout():
+    logout_user()
+    flash("You Have Been Logged Out")
+    return redirect(url_for('login'))
+
+@app.route('/dashboard', methods=['GET','POST'])
+@login_required
+def dashboard():
+    return render_template('dashboard.html')
+
+    
+
+
 # Create search
 @app.route('/search', methods=[ 'POST'])
+@login_required
 def search():
     form = SearchForm()
     customers=Customers.query
@@ -48,6 +113,7 @@ def search():
 
 # Create search
 @app.route('/search_book', methods=[ 'POST'])
+@login_required
 def search_book():
     form = Search2Form()
     books=Books.query
@@ -59,22 +125,6 @@ def search_book():
         #how i want to return data
         books=books.order_by(Books.id).all()
         return render_template("search_book.html", form=form, searched2=book.searched2, books=books)
-
-
-@app.route('/order')
-def order():
-    form=ChoiceForm()
-    if form.validate_on_submit():
-        issue_book = Issue_book.query.filter_by(customer=form.customer.data).first()
-        if issue_book is None:
-            issue_book=Issue_book(customer=form.customer.data, book=form.book.data, issue_date=form.issue_date.data, return_date=form.return_date.data )
-            db.session.add(issue_book)
-            db.session.commit()
-        
-        flash("Issued book Successfully!")
-    our_issues=Issue_book.query.order_by(Issue_book.id)
-    return render_template("order.html", form=form, id=id, our_issues=our_issues)
-    
 
 
 # Create a route decorator

@@ -1,13 +1,15 @@
 from flask import Blueprint, flash, render_template, request
-
+from flask_login import login_user, LoginManager, login_required, logout_user, current_user
 from forms import BookForm, SearchForm
 from mydb import db
 from models import Books
-book = Blueprint('book',__name__, url_prefix='/book')
+book = Blueprint('book',__name__, url_prefix='/book', static_folder='static')
+
 
 
 #Add a book
 @book.route('/book/add', methods=['GET','POST'])
+@login_required
 def add_book():
     name=None
     form=BookForm()
@@ -29,8 +31,9 @@ def add_book():
 
 #update book database record
 @book.route('/update_book/<int:id>', methods=['GET','POST'])
+@login_required
 def Update_book(id):
-    name=None
+    
     form=BookForm()
     name_to_update=Books.query.get_or_404(id)
     if request.method=="POST":
@@ -40,33 +43,36 @@ def Update_book(id):
         name_to_update.book_type=request.form['book_type']
         try:
             db.session.commit()
-            form.name.data=''
-            form.author.data=''
-            form.year_published.data=''
-            form.book_type.data=''
             flash('Book Updated Successfully!')
-            our_books=Books.query.order_by(Books.id)
-            return render_template("add_book.html", form=form, name=name, our_books=our_books)
+            return render_template("add_book.html", form=form, name_to_update=name_to_update, id=id)
         except:
             flash('Error! Try Again')
             return render_template ("update_book.html", form=form, name_to_update=name_to_update )
     else:
         return render_template ("update_book.html", form=form, name_to_update=name_to_update, id=id )
+
        
 #Delete a book
 @book.route('/delete_book/<int:id>')
+@login_required
 def delete_book(id):
     book_to_delete=Books.query.get_or_404(id)
-    name=None
-    form=BookForm()  
-    try:
-        db.session.delete(book_to_delete)
-        db.session.commit()
-        flash('Book Deleted Successfully!')   
-        our_books=Books.query.order_by(Books.id)
-        return render_template("add_book.html", form=form, name=name, our_books=our_books)
-    except:
-        flash('Error! Try Again')
-        return render_template("add_book.html", form=form, name=name, our_books=our_books)
+    id = current_user.id
+    if id == book_to_delete.orderer.id: 
+        try:
+            db.session.delete(book_to_delete)
+            db.session.commit()
+            flash('Book Deleted Successfully!')   
+            our_books=Books.query.order_by(Books.id)
+            return render_template("add_book.html", our_books=our_books)
+        except:
+            flash('Error! Try Again')
+            our_books=Books.query.order_by(Books.id)
+            return render_template("add_book.html", our_books=our_books)
+    else:
+            flash('Not Authorized To Delete This Book')
+            our_books=Books.query.order_by(Books.id)
+            return render_template("add_book.html", our_books=our_books)
 
+   
 

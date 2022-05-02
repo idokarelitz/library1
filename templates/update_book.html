@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% block content %}
+{% block body %}
 
 <!--pup up message-->
 {% for message in get_flashed_messages() %}
@@ -24,9 +24,12 @@
 </table>
 
 {% else %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
 <h1>Update Book!</h1>
 <br />
-<div class="shadow w-50 p-3 mb-5 bg-body rounded text-dark">
+<div class="w-100 shadow p-3 mb-5 bg-transparent rounded text-light">
 	<form action="/update_book/{{ name_to_update.id }}" method="POST">
 		{{ form.hidden_tag() }}
 
@@ -55,9 +58,9 @@
 		<a href="{{ url_for('index') }}" class="btn btn-success">Main Page</a>
 	</form>
 </div>
-
-
-
+</div>
+</div>
+</div>
 {% endif %}
 
 
