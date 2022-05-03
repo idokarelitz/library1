@@ -1,0 +1,132 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<!--pup up message-->
+{% for message in get_flashed_messages() %}
+<div class="alert w-50 alert-warning alert-dismissible fade show" role="alert">
+  <strong>
+    {{ message }}
+  </strong>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+
+{% if name %}
+<h1>Customer Added!</h1>
+<br />
+<table class="table w-50 table-hover table-success table-bordered border-primary table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">NAME</th>
+      <th scope="col">USERNAME</th>
+      <th scope="col">CITY</th>
+      <th scope="col">AGE</th>
+      <th scope="col">EMAIL</th>
+      <th scope="col">DELETE</th>
+    </tr>
+  </thead>
+  {% for our_customer in our_customers%}
+  <tr>
+    <tbody>
+      <th scope="row">{{ our_customer.id }}</th>
+      <td><a href="{{ url_for('customer.Update_customer', id=our_customer.id) }}">{{ our_customer.name }}</a></td>
+      <td>{{ our_customer.username }}</td>
+      <td>{{ our_customer.city }}</td>
+      <td>{{ our_customer.age }}</td>
+      <td>{{ our_customer.email }}</td>
+      <td><a href="{{ url_for('customer.delete_customer', id=our_customer.id) }}">Delete</a></td>
+      <td>PW: {{ our_customer.password_hash }}  </td>
+    </tr>
+  </tbody>
+  
+  {% endfor %}
+</table>
+{% else %}
+<div class="container">
+  <div class="row">
+      <div class="col-lg-4">
+<h1>CREATE CUSTOMER</h1>
+
+<div class="w-100 shadow p-3 mb-5 bg-transparent rounded text-light">
+  <form method="POST">
+    {{ form.hidden_tag() }}
+
+    {{ form.name.label(class="form-label") }}
+
+    {{ form.name(class="form-control") }}
+    <br />
+    {{ form.username.label(class="form-label") }}
+
+    {{ form.username(class="form-control") }}
+    <br />
+    {{ form.city.label(class="form-label") }}
+
+    {{ form.city(class="form-control") }}
+    <br />
+    {{ form.age.label(class="form-label") }}
+
+    {{ form.age(class="form-control") }}
+    <br />
+    {{ form.email.label(class="form-label") }}
+
+    {{ form.email(class="form-control") }}
+    <br />
+    {{ form.password_hash.label(class="form-label") }}
+
+    {{ form.password_hash(class="form-control") }}
+    <br />
+    {{ form.password_hash2.label(class="form-label") }}
+
+    {{ form.password_hash2(class="form-control") }}
+    <br />
+    {{ form.submit(class="btn btn-secondary") }}
+  </form>
+</div>
+</div>
+
+<div class="col-lg-8">
+  <br /><br /><br /><br /><br /><br />
+<table class="table w-100 text-light text-center ">
+  
+  <thead>
+    
+    <tr>
+      <th scope="col"><h5>ID</h5></th>
+      <th scope="col"><h5>UPDATE</h5></th>
+      <th scope="col"><h5>NAME</h5></th>
+      <th scope="col"><h5>USERNAME</h5></th>
+      <th scope="col"><h5>CITY</h5></th>
+      <th scope="col"><h5>AGE</h5></th>
+      <th scope="col"><h5>EMAIL</h5></th>
+      
+    </tr>
+  </thead>
+  {% for our_customer in our_customers%}
+  <tr class="bg-info">
+    <tbody>
+      <th scope="row">{{ our_customer.id }}</th>
+      <td><a href="{{ url_for('customer.Update_customer', id=our_customer.id) }}" class="btn btn-success"></a></td>
+      <td>{{ our_customer.name }}</td>
+      <td>{{ our_customer.username }}</td>
+      <td>{{ our_customer.city }}</td>
+      <td>{{ our_customer.age }}</td>
+      <td>{{ our_customer.email }}</td>
+  </tr>
+  </tbody>
+  
+</div>
+</div>
+</div>
+  {% endfor %}
+</table>
+
+
+
+
+
+{% endif %}
+
+{% endblock %}
+

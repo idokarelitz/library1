@@ -1,35 +1,96 @@
 {% extends 'layout.html' %}
 
+{% block body %}
 
-{% block title %}{% endblock %}
+<!--pup up message-->
+{% for message in get_flashed_messages() %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>
+    {{ message }}
+  </strong>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
 
-{% block content %}
+{% if name %}
+<h1>Customer Added!</h1>
+<br />
+<table class="table table-hover table-success table-bordered border-primary table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">CUSTOMER NAME</th>
+      <th scope="col">DATE ISSUED</th>
+      <th scope="col">DATE RETURN</th>
+      <th scope="col">BOOK_ID</th>
+      
+    </tr>
+  </thead>
+  {% for our_issues in our_issues %}
+  <tr>
+    <tbody>
+      <th scope="row">{{ our_issues.id }}</th>
+      <td>{{ our_issues.issued_by }}</td>
+      <td>{{ our_issues.date_issued }}</td>
+      <td>{{ our_issues.date_return }}</td>
+      <td>{{ our_issues.book }}</td>
+    </tr>
+  </tbody>
+  
+  {% endfor %}
+</table>
+{% else %}
+<div class="container">
+  <div class="row">
+      <div class="col-lg-6">
 
-<div class="w-50 shadow p-3 mb-5 bg-body rounded text-dark">
-<form action="order" method="POST">
+<h1>Create New Order:</h1>
+<br />
+<div class="w-100 shadow p-3 mb-5 bg-transparent rounded text-light">
+  <form method="POST">
     {{ form.hidden_tag() }}
-    {{ form.customerid.label(class="form-label") }}
 
-    {{ form.customerid(class="form-control") }}
+    
+    {{ form.days_return.label(class="form-label") }}
+
+    {{ form.days_return(class="form-control") }}
     <br />
-    {{ form.bookid.label(class="form-label") }}
+    {{ form.book_id.label(class="form-label") }}
 
-    {{ form.bookid(class="form-control") }}
-    <br />
-    {{ form.issue_date.label(class="form-label") }}
-
-    {{ form.issue_date(class="form-control") }}
-    <br />
-    {{ form.return_date.label(class="form-label") }}
-
-    {{ form.return_date(class="form-control") }}
+    {{ form.book_id(class="form-control") }}
     <br />
     
     {{ form.submit(class="btn btn-secondary") }}
-
-
-
-</form>
-
+  </form>
+</div>
+</div>
+<div class="col-lg-6">
+<h1>Order List: </h1>
+<table class="table w-100 table-hover table-success table-bordered border-primary table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">CUSTOMER NAME</th>
+      <th scope="col">DATE ISSUED</th>
+      <th scope="col">DATE RETURN</th>
+      <th scope="col">BOOK_TITLE</th>
+    </tr>
+  </thead>
+  {% for our_issues in our_issues %}
+  <tr>
+    <tbody>
+      <th scope="row">{{ our_issues.id }}</th>
+      <td>{{ our_issues.issuer }}</td>
+      <td>{{ our_issues.date_issued }}</td>
+      <td>{{ our_issues.date_return }}</td>
+      <td>{{ our_issues.orderer }}</td>
+      <td><a href="{{ url_for('delete_order', id=our_issues.id) }}" class="btn btn-danger">Return</a></td>
+  </tr>
+  </tbody>
+  {% endfor %}
+</table>
+{% endif %}
+</div>
+</div>
 </div>
 {% endblock %}

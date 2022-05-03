@@ -3,7 +3,7 @@
 
 {% block title %}{% endblock %}
 
-{% block content %}
+{% block body %}
 <br/>
 <!--
 <h2>You Searched For</h2>
@@ -35,7 +35,7 @@
       <td><a href="{{ url_for('customer.Update_customer', id=customer.id) }}">{{ customer.name }}</a></td>
       <td>{{ customer.city }}</td>
       <td>{{ customer.age }}</td>
-      <td><a href="{{ url_for('customer.delete', id=customer.id) }}">Delete</a></td>
+      <td><a href="{{ url_for('customer.delete_customer', id=customer.id) }}">Delete</a></td>
   </tr>
   </tbody>
 </div>

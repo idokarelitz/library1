@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% block content %}
+{% block body %}
 
 <!--pup up message-->
 {% for message in get_flashed_messages() %}
@@ -16,7 +16,7 @@
 <h1>Customer Added!</h1>
 <br /><br /><br />
 <div class="table-responsive"></div>
-<table class="table w-50 table-hover table-success table-bordered border-primary table-striped">
+<table class="w-100 shadow p-3 mb-5 bg-transparent rounded text-light">
   <thead>
     <tr>
       <th scope="col">ID</th>
@@ -40,9 +40,12 @@
   {% endfor %}
 </table>
 {% else %}
+<div class="container">
+  <div class="row">
+      <div class="col-lg-6">
 <h1>Create New Customer:</h1>
 <br />
-<div class="w-50 shadow p-3 mb-5 bg-body rounded text-dark">
+<div class="w-100 shadow p-3 mb-5 bg-transparent rounded text-light">
   <form method="POST">
     {{ form.hidden_tag() }}
 
@@ -62,7 +65,7 @@
 
     <a href="{{ url_for('index') }}" class="btn btn-success">Main Page</a>
   </form>
-
+</div>
 </div>
 <br />
 <h1>For Update/Delete Select Customer Name: </h1>

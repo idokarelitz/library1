@@ -1,47 +1,69 @@
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top">
+
+            <nav class="navbar navbar-expand-sm navbar-dark bg-transparent fix-top">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">
             <img src="\static\images\logo_main.svg" alt="" width="30" height="30"
                 class="d-inline-block align-text-top" />
-
         </a>
+       
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
                 <a class="nav-link text-light" href="/about">ABOUT</a>
             </li>
+            {% if current_user.is_authenticated %}
             <li class="nav-item">
-                <a class="nav-link " href="{{ url_for('customer.add_customer')}}">CUSTOMERS</a>
+            <a class="nav-link text-light" href="{{ url_for('dashboard')}}">DASHBOARD</a>
+            </li>
+            {% if current_user.id == 1 %}
+            <li class="nav-item">
+                <a class="nav-link text-light" href="{{ url_for('admin')}}">ADMIN</a>
+                </li>
+            {% endif %}
+            <li class="nav-item">
+                <a class="nav-link text-light" href="{{ url_for('book.add_book')}}">BOOKS</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " href="{{ url_for('book.add_book')}}">BOOKS</a>
+                <a class="nav-link text-light" href="{{ url_for('customer.customers')}}">CUSTOMERS</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " href="{{ url_for('issue.issue_book')}}">ISSUE A BOOK</a>
+                <a class="nav-link text-light" href="{{ url_for('order')}}">ORDERS</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " href="{{ url_for('order')}}">ORDER</a>
+                <a class="nav-link text-light" href="{{ url_for('logout')}}">LOGOUT</a>
             </li>
             
-        </ul>
+            <li class="nav-item">
+                <form method="POST" action="{{ url_for('search')}}" class="d-flex">
+                    {{ form.hidden_tag() }}
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search", name="searched">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">customers</button>
+                  </form>
+                </li>
+                <li class="nav-item">
+                <form method="POST" action="{{ url_for('search_book')}}" class="d-flex">
+                    {{ form.hidden_tag() }}
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search", name="searched2">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">books</button>
+                  </form></li>
+            {% else %}
+            
+            <li class="nav-item">
+                <a class="nav-link text-light " href="{{ url_for('login')}}">LOGIN</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light" href="{{ url_for('customer.register_new')}}">REGISTER</a>
+            </li>
+            <h2>WELCOME TO THE LIBRARY</h2>
+            {% endif %}
+
+
+        </ul>   
     </div>
-    <form method="POST" action="{{ url_for('search')}}" class="d-flex">
-        {{ form.hidden_tag() }}
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search", name="searched">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">customers</button>
-      </form>
-      <br/>
-      <form method="POST" action="{{ url_for('search_book')}}" class="d-flex">
-        {{ form.hidden_tag() }}
-        <input class="form-control mr-sm-2" type="search" placeholder="Search", name="searched2">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">books</button>
-      </form>
 </nav>
 
 
-<!-- FOOTER -->
+<!-- FOOTER 
 <footer class="fixed-bottom bg-transparent text-center text-lg-start">
-    <h3><a href="/about" class="badge badge-danger badge-primary bg-dark">© 2022 Copyright: IDO KARELITZ</a></h3>
-
-
-    
+    <h3><a href="/about" class="badge badge-danger badge-primary bg-dark">© 2022 Copyright: IDO KARELITZ</a></h3>  
 </footer>
+-->

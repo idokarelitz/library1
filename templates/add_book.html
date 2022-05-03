@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% block content %}
+{% block body %}
 
 <!--pup up message-->
 {% for message in get_flashed_messages() %}
@@ -13,39 +13,35 @@
 {% endfor %}
 
 {% if name %}
-<h1>Book Added!</h1>
-<br /><br /><br />
-<div class="table-responsive"></div>
-<table class="table w-50 table-hover table-success table-bordered table-striped">
+
+<table class="table w-100 table-transparent text-light ">
     <thead>
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">NAME</th>
-            <th scope="col">AUTHOR</th>
-            <th scope="col">YEAR PUBLISHED</th>
-            <th scope="col">BOOK TYPE</th>
-            <th scope="col">DELETE</th>
-        </tr>
+       
     </thead>
     {% for our_book in our_books%}
-    <tr>
-        <tbody>
-            <th scope="row">{{ our_book.id }}</th>
-            <td><a href="{{ url_for('book.Update_book', id=our_book.id) }}">{{ our_book.name }}</a></td>
-            <td>{{ our_book.author }}</td>
-            <td>{{ our_book.year_published }}</td>
-            <td>{{ our_book.book_type }}</td>
-            <td><a href="{{ url_for('book.delete_book', id=our_book.id) }}">Delete</a></td>
-    </tr>
-    </tbody>
-
-    {% endfor %}
-</table>
+          <div class="card-body text-light">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-8">
+            <h5 class="card-title">BOOK TITLE: {{ our_book.name }}</h5>
+            <h6 class="card-text">BOOK AUTHOR: {{ our_book.author }}</h6>
+            <p class="card-text">PUBLISHED IN: {{ our_book.year_published }}</p>
+            <p class="card-text">ID NUMBER: {{ our_book.id }}</p>
+            <p class="card-text">TYPE: {{ our_book.type }}</p>
+            <a href="{{ url_for('book.Update_book', id=our_book.id) }}" class="btn btn-primary">UPDATE</a>
+            <div class="col-4">
+                <img src="..\static\images\dragons.of.a.fallen.sun.jpg" class=card-img-top>
+                
+        </div>
+      </div>
+    </div>
+    </div>
 </div>
+{% endfor %}
 {% else %}
-<h1>Create New Book:</h1>
+<div class="w-50 shadow p-3 mb-5 bg-transparent rounded text-light">
+    <h1>Create New Book:</h1>
 <br />
-<div class="w-50 shadow p-3 mb-5 bg-body rounded text-dark">
     <form method="POST">
         {{ form.hidden_tag() }}
 
@@ -61,47 +57,70 @@
 
         {{ form.year_published(class="form-control") }}
         <br />
-        {{ form.book_type.label(class="form-label") }}
+        {{ form.book_pic.label(class="form-label") }}
 
-        {{ form.book_type(class="form-control") }}
+        {{ form.book_pic(class="form-control") }}
         <br />
         {{ form.submit(class="btn btn-secondary") }}
 
         <a href="{{ url_for('index') }}" class="btn btn-success">Main Page</a>
     </form>
-
 </div>
-<br />
-<h1>For Update/Delete Select Book Name: </h1>
-<table class="table w-50 table-hover table-success table-bordered border-primary table-striped">
-    <thead>
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">NAME</th>
-            <th scope="col">AUTHOR</th>
-            <th scope="col">YEAR PUBLISHED</th>
-            <th scope="col">BOOK TYPE</th>
 
-        </tr>
-    </thead>
-    {% for our_book in our_books%}
-    <tr>
-        <tbody>
-            <th scope="row">{{ our_book.id }}</th>
-            <td><a href="{{ url_for('book.Update_book', id=our_book.id) }}">{{ our_book.name }}</a></td>
-            <td>{{ our_book.author }}</td>
-            <td>{{ our_book.year_published }}</td>
-            <td>{{ our_book.book_type }}</td>
-            
+
+
+
+    
+    
+    
     
 
-    </tr>
-    </tbody>
 
-    {% endfor %}
-</table>
+
+    <div class="container">
+        <div class="row">
+          <div class="col-sm">
+        <div class="card">
+          <div class="imgBx">
+              <img src="..\static\images\dragons.of.a.fallen.sun.jpg" class="w-100 rounded mx-auto d-block" alt="...">
+          </div>
+          <div class="details">
+              <h2>SomeOne Famous<br><span>Director</span></h2>
+          </div>
+        </div>
+    </div>
+    <div class="col-sm">
+        <div class="card">
+          <div class="imgBx">
+              <img src="..\static\images\dragons.of.a.fallen.sun.jpg" class="w-100 rounded mx-auto d-block" alt="...">
+          </div>
+          <div class="details">
+              <h2>SomeOne Famous<br><span>Director</span></h2>
+          </div>
+        </div>
+    </div>
+    <div class="col-sm">
+        <div class="card">
+          <div class="imgBx">
+              <img src="..\static\images\dragons.of.a.fallen.sun.jpg" class="w-100 rounded mx-auto d-block" alt="...">
+          </div>
+          <div class="details">
+              <h2>SomeOne Famous<br><span>Director</span></h2>
+          </div>
+        </div>
+    </div>
+    
+  </div>
+</div>
+
+    
+         
+
+
+    
 
 {% endif %}
 
-
 {% endblock %}
+
+
