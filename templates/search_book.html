@@ -4,30 +4,33 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-<h1>You Searched For</h1>
-<br /><br /><br />
-<div class="table-responsive"></div>
-<table class="table w-50 table-hover table-success table-bordered border-primary table-striped">
+<h1>YOU SEARCHED FOR...</h1>
+<br />
+<table class="table w-50 text-light text-center ">
   <thead>
     <tr>
-      <th scope="col">ID</th>
-      <th scope="col">NAME</th>
-      <th scope="col">AUTHOR</th>
-      <th scope="col">YEAR PUBLISHED</th>
-      <th scope="col">DELETE</th>
+      <th scope="col"><h5>ID</h5></th>
+      <th scope="col"><h5>UPDATE</h5></th>
+      <th scope="col"><h5>NAME</h5></th>
+      <th scope="col"><h5>AUTHOR</h5></th>
+      <th scope="col"><h5>YEAR PUBLISHED</h5></th>
     </tr>
   </thead>
   {% for book in books %}
-  <tr>
+  <tr class="bg-info">
     <tbody>
       <th scope="row">{{ book.id }}</th>
-      <td><a href="{{ url_for('book.Update_book', id=book.id) }}">{{ book.name }}</a></td>
+      <td><a href="{{ url_for('Update_book', id=book.id) }}" class="btn btn-success"></a></td>
+      <td>{{ book.name }}</td>
       <td>{{ book.author }}</td>
       <td>{{ book.year_published }}</td>
-      <td><a href="{{ url_for('book.delete_book', id=book.id) }}">Delete</a></td>
+      <td>{{ book.book_pic }}</td>
   </tr>
-  </tbody>
+</tbody>
 </div>
-{% endfor%}
+</div>
+</div>
+  {% endfor %}
+</table>
 {% endblock %}
 

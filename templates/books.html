@@ -6,46 +6,39 @@
 
 
 
-
-
-<div class="container">
-    <div class="row">
-      <div class="col-sm">
-    <div class="card">
-      <div class="imgBx">
-          <img src="..\static\images\dragons.of.a.fallen.sun.jpg" class="w-100 rounded mx-auto d-block" alt="...">
-      </div>
-      <div class="details">
-          <h2>SomeOne Famous<br><span>Director</span></h2>
-      </div>
-    </div>
-</div>
-<div class="col-sm">
-    <div class="card">
-      <div class="imgBx">
-          <img src="..\static\images\dragons.of.a.fallen.sun.jpg" class="w-100 rounded mx-auto d-block" alt="...">
-      </div>
-      <div class="details">
-          <h2>SomeOne Famous<br><span>Director</span></h2>
-      </div>
-    </div>
-</div>
-<div class="col-sm">
-    <div class="card">
-      <div class="imgBx">
-          <img src="..\static\images\dragons.of.a.fallen.sun.jpg" class="w-100 rounded mx-auto d-block" alt="...">
-      </div>
-      <div class="details">
-          <h2>SomeOne Famous<br><span>Director</span></h2>
-      </div>
-    </div>
-</div>
-
-</div>
-</div>
-
-
-
-
+<table class="table w-100 text-light text-center ">
+    <thead>
+      <tr>
+        <th scope="col"><h5>ID</h5></th>
+        <th scope="col"><h5>UPDATE</h5></th>
+        <th scope="col"><h5>NAME</h5></th>
+        <th scope="col"><h5>AUTHOR</h5></th>
+        <th scope="col"><h5>YEAR PUBLISHED</h5></th>
+      </tr>
+    </thead>
+    {% for our_book in our_books%}
+    <tr class="bg-info">
+      <tbody>
+        <th scope="row"><h4>{{ our_book.id }}</h4></th>
+        <td><a href="{{ url_for('Update_book', id=our_book.id) }}" class="btn btn-success"></a></td>
+        <td><h4>{{ our_book.name }}</h4></td>
+        <td><h4>{{ our_book.author }}</h4></td>
+        <td><h4>{{ our_book.year_published }}</h4></td>
+        <td><div class="card">
+          <div class="imgBx">
+              <img src="{{ url_for('static', filename='images/' + our_book.profile_pic )}}" align="center" width="150">
+          </div>
+          <div class="details">
+              <h2>{{ our_book.author }}<br><span>{{ our_book.year_published }}</span></h2>
+          </div>
+        </div>
+    </div></td>
+      </tbody>
+    </tr>
+  </div>
+  </div>
+  </div>
+    {% endfor %}
+  </table>
 
 {% endblock %}
