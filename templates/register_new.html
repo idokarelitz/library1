@@ -12,10 +12,11 @@
 </div>
 {% endfor %}
 
-
-
+<div class="container2">
+	<div class="row">
+<div class="col-8" >
 <div class="w-50 shadow p-3 mb-5 bg-transparent rounded text-light">
-  <h1>Register:</h1>
+  <h1>REGISTER</h1>
 <br />
   <form method="POST">
     {{ form.hidden_tag() }}
@@ -52,9 +53,9 @@
 </form>
 </div>
 </div>
-
-	
-
+<div class="col-4" >
+	<img src="{{ url_for('static', filename='images/logo_main.svg')}}" align="center" width="300">
+  </div>
 </div>
 </div>
 {% endblock %}

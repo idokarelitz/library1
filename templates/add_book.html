@@ -13,36 +13,38 @@
 {% endfor %}
 
 {% if name %}
+<table class="table w-100 text-light text-center ">
+  <thead>
+    <tr>
+      <th scope="col"><h5>ID</h5></th>
+      <th scope="col"><h5>UPDATE</h5></th>
+      <th scope="col"><h5>NAME</h5></th>
+      <th scope="col"><h5>AUTHOR</h5></th>
+      <th scope="col"><h5>YEAR PUBLISHED</h5></th>
+    </tr>
+  </thead>
+  {% for our_book in our_books%}
+  <tr class="bg-info">
+    <tbody>
+      <th scope="row">{{ our_book.id }}</th>
+      <td><a href="{{ url_for('Update_book', id=our_book.id) }}" class="btn btn-success"></a></td>
+      <td>{{ our_book.name }}</td>
+      <td>{{ our_book.author }}</td>
+      <td>{{ our_book.year_published }}</td>
+      <td>{{ our_book.book_pic }}</td>
+  </tr>
+</tbody>
+</table>
+  {% endfor %}
 
-<table class="table w-100 table-transparent text-light ">
-    <thead>
-       
-    </thead>
-    {% for our_book in our_books%}
-          <div class="card-body text-light">
-              <div class="container">
-                  <div class="row">
-                      <div class="col-8">
-            <h5 class="card-title">BOOK TITLE: {{ our_book.name }}</h5>
-            <h6 class="card-text">BOOK AUTHOR: {{ our_book.author }}</h6>
-            <p class="card-text">PUBLISHED IN: {{ our_book.year_published }}</p>
-            <p class="card-text">ID NUMBER: {{ our_book.id }}</p>
-            <p class="card-text">TYPE: {{ our_book.type }}</p>
-            <a href="{{ url_for('book.Update_book', id=our_book.id) }}" class="btn btn-primary">UPDATE</a>
-            <div class="col-4">
-                <img src="..\static\images\dragons.of.a.fallen.sun.jpg" class=card-img-top>
-                
-        </div>
-      </div>
-    </div>
-    </div>
-</div>
-{% endfor %}
 {% else %}
-<div class="w-50 shadow p-3 mb-5 bg-transparent rounded text-light">
-    <h1>Create New Book:</h1>
+<div class="container2">
+    <div class="row">
+        <div class="col-sm-4">
+<div class="w-100 shadow p-3 mb-5 bg-transparent rounded text-light">
+    <h1>CREATE NEW BOOK</h1>
 <br />
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
 
         {{ form.name.label(class="form-label") }}
@@ -57,70 +59,50 @@
 
         {{ form.year_published(class="form-control") }}
         <br />
-        {{ form.book_pic.label(class="form-label") }}
-
-        {{ form.book_pic(class="form-control") }}
-        <br />
+        
         {{ form.submit(class="btn btn-secondary") }}
-
-        <a href="{{ url_for('index') }}" class="btn btn-success">Main Page</a>
     </form>
 </div>
-
-
-
-
-    
-    
-    
-    
-
-
-
-    <div class="container">
-        <div class="row">
-          <div class="col-sm">
-        <div class="card">
-          <div class="imgBx">
-              <img src="..\static\images\dragons.of.a.fallen.sun.jpg" class="w-100 rounded mx-auto d-block" alt="...">
-          </div>
-          <div class="details">
-              <h2>SomeOne Famous<br><span>Director</span></h2>
-          </div>
-        </div>
-    </div>
-    <div class="col-sm">
-        <div class="card">
-          <div class="imgBx">
-              <img src="..\static\images\dragons.of.a.fallen.sun.jpg" class="w-100 rounded mx-auto d-block" alt="...">
-          </div>
-          <div class="details">
-              <h2>SomeOne Famous<br><span>Director</span></h2>
-          </div>
-        </div>
-    </div>
-    <div class="col-sm">
-        <div class="card">
-          <div class="imgBx">
-              <img src="..\static\images\dragons.of.a.fallen.sun.jpg" class="w-100 rounded mx-auto d-block" alt="...">
-          </div>
-          <div class="details">
-              <h2>SomeOne Famous<br><span>Director</span></h2>
-          </div>
-        </div>
-    </div>
-    
-  </div>
 </div>
 
-    
-         
-
-
-    
-
+<div class="col-sm-8">
+<h1>BOOKS</h1>
+<table class="table w-100 text-light text-center ">
+  <thead>
+    <tr>
+      <th scope="col"><h5>ID</h5></th>
+      <th scope="col"><h5>UPDATE</h5></th>
+      <th scope="col"><h5>NAME</h5></th>
+      <th scope="col"><h5>AUTHOR</h5></th>
+      <th scope="col"><h5>YEAR PUBLISHED</h5></th>
+    </tr>
+  </thead>
+  {% for our_book in our_books%}
+  <tr class="bg-info">
+    <tbody>
+      <th scope="row"><h4>{{ our_book.id }}</h4></th>
+      <td><a href="{{ url_for('Update_book', id=our_book.id) }}" class="btn btn-success"></a></td>
+      <td><h4>{{ our_book.name }}</h4></td>
+      <td><h4>{{ our_book.author }}</h4></td>
+      <td><h4>{{ our_book.year_published }}</h4></td>
+      <td><div class="card">
+        <div class="imgBx">
+            <img src="{{ url_for('static', filename='images/' + our_book.profile_pic )}}" align="center" width="150" alt="logo_main.svg">
+        </div>
+        <div class="details">
+            <h2>{{ our_book.author }}<br><span>{{ our_book.year_published }}</span></h2>
+        </div>
+      </div>
+  </div></td>
+    </tbody>
+  </tr>
+</div>
+</div>
+</div>
+  {% endfor %}
+</table>
 {% endif %}
-
+</div>
 {% endblock %}
 
 

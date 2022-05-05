@@ -11,14 +11,14 @@ h1
   text-shadow: -1px -1px rgb(77, 77, 77), 1px 1px rgb(49, 49, 49), -3px 0 4px #000;
   font-family:Arial, Helvetica, sans-serif;
   color: rgb(255, 255, 255);
-  padding:10px;
+  padding:5px;
   font-weight:lighter;
   -moz-box-shadow: 2px 2px 6px #888;  
   -webkit-box-shadow: 2px 2px 6px #888;  
   box-shadow:2px 2px 6px #888;  
   text-align:center;
   display:block;
-  margin:16px;
+  margin:4px;
   width: 100%;
   background-image:url(images/background-h1-wood.jpg);  
 }
@@ -116,7 +116,7 @@ h1
 
 .wrapper{
   position: absolute;
-  top: 50%;
+  top: 35%;
   left: 50%;
   transform: translate(-50%,-50%);
   }
@@ -172,7 +172,7 @@ h1
 
 .btn{  
   border-radius: 4px;
-  height: 44px;
+  height: 30px;
   font-size: 13px;
   font-weight: 600;
   text-transform: uppercase;
@@ -526,5 +526,78 @@ margin-top: 5px;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 1rem;
 }
+
+a {
+  text-decoration: none;
+  color: inherit;
+  font-size: 24px;
+}
+
+
+
+
+
+.animate-charcter
+{
+   text-transform: uppercase;
+  background-image: linear-gradient(
+    -225deg,
+    #ff6565 0%,
+    #c3c3c3 29%,
+    #666666 67%,
+    #ff0000 100%
+  );
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 8s linear infinite;
+  display: inline-block;
+      font-size: 80px;
+}
+
+@keyframes textclip {
+  to {
+    background-position: 200% center;
+  }
+}
+
+
+
+
+
+.pic-ctn {
+  width: 100vw;
+  height: 200px;
+}
+
+@keyframes display {
+  0% {
+    transform: translateX(200px);
+    opacity: 0;
+  }
+  10% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  20% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  30% {
+    transform: translateX(-200px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-200px);
+    opacity: 0;
+  }
+}
+
+
 
 

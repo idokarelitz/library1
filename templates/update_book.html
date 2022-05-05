@@ -18,18 +18,15 @@
 <table class="table w-50 table-hover table-success table-bordered table-striped">
 	{% for our_book in our_books%}
 	<tr>
-		<td>{{ our_book.id }}-{{ our_book.name }}-{{ our_book.author }}-{{ our_book.year_published }}-{{ our_book.book_type }}</td>
+		<td>{{ our_book.id }}-{{ our_book.name }}-{{ our_book.author }}-{{ our_book.year_published }}</td>
 	</tr>
-	{% endfor %}
 </table>
+	{% endfor %}
 
 {% else %}
-<div class="container">
-    <div class="row">
-        <div class="col-lg-6">
-<h1>Update Book!</h1>
+<div class="w-50 shadow p-3 mb-5 bg-transparent rounded text-light">
+	<h1>Update Book!</h1>
 <br />
-<div class="w-100 shadow p-3 mb-5 bg-transparent rounded text-light">
 	<form action="/update_book/{{ name_to_update.id }}" method="POST" enctype="multipart/form-data">
 		
 		{{ form.hidden_tag() }}
@@ -46,23 +43,20 @@
 
 		{{ form.year_published(class="form-control", value=name_to_update.year_published) }}
 		<br />
-        {{ form.book_pic.label(class="form-label") }}
+        {{ form.profile_pic.label(class="form-label") }}
 
-		{{ form.book_pic(class="form-control", value=name_to_update.book_type) }}
+		{{ form.profile_pic(class="form-control", value=name_to_update.profile_pic) }}
 		<br />
+		
 		{{ form.submit(class="btn btn-secondary") }}
 
 		<a href="{{ url_for('book.add_book') }}" class="btn btn-danger">Cancel Update</a>
 
 		<a href="{{ url_for('book.delete_book', id=id) }}" class="btn btn-danger">Delete</a>
-
-		<a href="{{ url_for('index') }}" class="btn btn-success">Main Page</a>
 	</form>
 </div>
 </div>
 </div>
 </div>
 {% endif %}
-
-
 {% endblock %}

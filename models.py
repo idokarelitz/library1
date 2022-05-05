@@ -7,10 +7,10 @@ from flask_login import UserMixin
 class Customers(db.Model, UserMixin):
     id        = db.Column(db.Integer, primary_key=True)
     name      = db.Column(db.String(200), nullable=False)
-    username   = db.Column(db.String(20), nullable=False, unique=True)
+    username   = db.Column(db.String(200), nullable=False, unique=True)
     city      = db.Column(db.String(200), nullable=False)
     age       = db.Column(db.String(10), nullable=False)
-    email      = db.Column(db.String(120), nullable=False, unique=True)
+    email      = db.Column(db.String(200), nullable=False)
     date_added = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     issue_book = db.relationship("Orders", backref="issuer", lazy=True)
     #password hash
@@ -38,13 +38,13 @@ class Books(db.Model):
     name           = db.Column(db.String(200), nullable=False, unique=True)
     author         = db.Column(db.String(200), nullable=False)
     year_published = db.Column(db.Integer, nullable=False)
-    book_pic       = db.Column(db.String(), nullable=True)
+    profile_pic       = db.Column(db.String(), nullable=True)
     copy = db.relationship("Orders", backref="orderer", lazy=True)
     
     
     def __repr__(self):
         return '%r'   % self.name
-
+#model for orders
 class Orders(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     issued_by = db.Column(db.Integer, db.ForeignKey("customers.id"))

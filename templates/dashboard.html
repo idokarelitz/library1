@@ -11,32 +11,131 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 {% endfor %}
+
 <h1>Dashboard</h1>
 <br/>
-<div class="container">
-
-<div class="card">
-    <div class="card-header">
-        {{ current_user.name }}
+<div class="container2">
+<div class="row">
+  <div class="col-sm-8">
+<div class="div text-light ">
+    <div class="div-header">
+        <h1>{{ current_user.name }}</h1>
     </div>
-    <div class="card-body">
-      <h5 class="card-title text-dark">Welcome to your customer dashboard</h5>
-      <p class="card-text text-dark">
-        <strong>Name</strong>{{ current_user.name }}<br/>
-        <strong>Username</strong>{{ current_user.username }}<br/>
-        <strong>Customer ID:</strong>{{ current_user.id }}<br/>
-        <strong>City:</strong>{{ current_user.city }}<br/>
-        <strong>Age</strong>{{ current_user.age }}<br/>
-        <strong>Email</strong>{{ current_user.email }}<br/>
-        <strong>Date Joined:</strong>{{ current_user.date_added }}<br/>
-        
-        
-      </p>
-      
-      <a href="{{ url_for('customer.Update_customer', id=current_user.id) }}" class="btn btn-success">Update</a>
-      
+    <div class="div-body">
+      <h2 class="div-title text-center text-light">Welcome to your customer dashboard</h2>
+      <a class="div-text text-light">
+        <div class="container">
+          <div class="row">
+            <div class="col text-center">
+        <strong>Name: </strong>{{ current_user.name }}<br/>
+        <strong>Username: </strong>{{ current_user.username }}<br/>
+        <strong>Customer ID: </strong>{{ current_user.id }}<br/>
+        <strong>City: </strong>{{ current_user.city }}<br/>
+        <strong>Age: </strong>{{ current_user.age }}<br/>
+        <strong>Email: </strong>{{ current_user.email }}<br/>
+        <strong>Date Joined: </strong>{{ current_user.date_added }}<br/>
+      </a>
+      <a href="{{ url_for('Update_customer', id=current_user.id) }}" class="btn btn-success">Update</a>
+    </div>
+    <div class="col-sm-4" >
+      <img src="{{ url_for('static', filename='images/logo_main.svg')}}" align="right" width="300">
     </div>
   </div>
 </div>
+</div>
+</div>
+</div>
+</div>
 
+
+<div class="container2">
+  <h1>CUSTOMERS</h1>
+  <table class="table w-100 text-light text-center ">
+    <thead>
+      <tr>
+        <th scope="col"><h5>ID</h5></th>
+        <th scope="col"><h5>UPDATE</h5></th>
+        <th scope="col"><h5>NAME</h5></th>
+        <th scope="col"><h5>USERNAME</h5></th>
+        <th scope="col"><h5>CITY</h5></th>
+        <th scope="col"><h5>AGE</h5></th>
+        <th scope="col"><h5>EMAIL</h5></th>
+      </tr>
+    </thead>
+    {% for our_customer in our_customers%}
+    <tr class="bg-info">
+      <tbody>
+        <th scope="row">{{ our_customer.id }}</th>
+        <td><a href="{{ url_for('Update_customer', id=our_customer.id) }}" class="btn btn-success"></a></td>
+        <td>{{ our_customer.name }}</td>
+        <td>{{ our_customer.username }}</td>
+        <td>{{ our_customer.city }}</td>
+        <td>{{ our_customer.age }}</td>
+        <td>{{ our_customer.email }}</td>
+    </tr>
+    </tbody>
+    {% endfor %}
+  </table>
+<br/><br/><br/>
+  
+<h1>BOOKS</h1>
+  <table class="table w-100 text-light text-center ">
+    <thead>
+      <tr>
+        <th scope="col"><h5>ID</h5></th>
+        <th scope="col"><h5>UPDATE</h5></th>
+        <th scope="col"><h5>NAME</h5></th>
+        <th scope="col"><h5>AUTHOR</h5></th>
+        <th scope="col"><h5>YEAR PUBLISHED</h5></th>
+      </tr>
+    </thead>
+    {% for our_book in our_books%}
+    <tr class="bg-info">
+      <tbody>
+        <th scope="row">{{ our_book.id }}</th>
+        <td><a href="{{ url_for('Update_book', id=our_book.id) }}" class="btn btn-success"></a></td>
+        <td>{{ our_book.name }}</td>
+        <td>{{ our_book.author }}</td>
+        <td>{{ our_book.year_published }}</td>
+        <td>{{ our_book.book_pic }}</td> 
+    </tr>
+    </tbody>
+    {% endfor %}
+  </table>
+  <br/><br/><br/>
+<table class="table w-100 text-light text-center ">
+  
+  <h1>ORDERS</h1>
+  <thead>
+    <tr>
+      <th scope="col">
+        <h3>ID</h3>
+      </th>
+      <th scope="col">
+        <h3>CUSTOMER NAME</h3>
+      </th>
+      <th scope="col">
+        <h3>BOOK TITLE</h3>
+      </th>
+      <th scope="col">
+        <h3>DATE ISSUED</h3>
+      </th>
+      <th scope="col">
+        <h3>DATE RETURN</h3>
+      </th>
+    </tr>
+  </thead>
+  {% for our_issues in our_issues %}
+  <tr class="bg-info">
+    <tbody>
+      <th scope="row">{{ our_issues.id }}</th>
+      <td>{{ our_issues.issuer }}</td>
+      <td>{{ our_issues.orderer }}</td>
+      <td>{{ our_issues.date_issued }}</td>
+      <td>{{ our_issues.date_return }}</td>
+      <td><a href="{{ url_for('delete_order', id=our_issues.id) }}" class="btn btn-danger">Return</a></td>
+  </tr>
+  </tbody>
+  {% endfor %}
+</div>
   {% endblock %}

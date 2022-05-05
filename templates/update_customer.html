@@ -28,7 +28,7 @@
 		<br />
 		{{ form.username.label(class="form-label") }}
 
-		{{ form.username(class="form-control", value=name_to_update.name) }}
+		{{ form.username(class="form-control", value=name_to_update.username) }}
 		<br />
 		{{ form.city.label(class="form-label") }}
 
@@ -40,7 +40,7 @@
 		<br />
 		{{ form.email.label(class="form-label") }}
 
-    	{{ form.email(class="form-control") }}
+    	{{ form.email(class="form-control", value=name_to_update.email) }}
     	<br />
 		{{ form.submit(class="btn btn-secondary") }}
 
@@ -56,6 +56,5 @@
 	</strong>
 	<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
-
 {% endif %}
 {% endblock %}
