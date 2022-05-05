@@ -1,3 +1,10 @@
+
+# If you do not want to register use:
+  username: ido1
+  password: 1234
+
+
+
 Class project - Library Management Site
 ---------------------------------------
 
