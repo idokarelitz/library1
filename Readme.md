@@ -49,31 +49,28 @@ Bass Design Bootstrap + css and js was added.
 # Start
 
 - Clone the repository.
-
-```sh
+```
 $ git clone https://github.com/idokarelitz/Library1.git
-$ cd Library1
+
 ```
 
 - Create Virtual Environment.
-
-```sh
-$ virtualenv venv
-$ source venv/bin/activate
+```
+$ py -m venv env
+$ cd env/scripts
+$ activate.ps1
+$ cd library1
 ```
 
 - Install dependencies.
-
-```sh
+```
 $ pip install -r requirements.txt
 ```
 
 - Run the application.
-
-```bash
+```
 $ python app.py
 ```
-
 - Navigate to http://127.0.0.1:9000/
 
 # Project made and maintained by [Ido Karelitz](https://www.github.com/idokarelitz)
