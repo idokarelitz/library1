@@ -18,7 +18,7 @@
 {% if id == current_user.id %}
 <h1>Update Customer...</h1>
 <br />
-<div class="shadow w-50 p-3 mb-5 bg-body rounded text-dark">
+<div class="w-50 shadow p-3 mb-5 bg-transparent rounded text-light">
 	<form action="/update_customer/{{ name_to_update.id }}" method="POST">
 		{{ form.hidden_tag() }}
 
