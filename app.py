@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from werkzeug.utils import secure_filename
 import uuid as uuid
 import os 
-
+#blueprint
 from mydb import db, migrate
 from customer import customer
 from book import book
