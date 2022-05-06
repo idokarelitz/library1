@@ -22,6 +22,9 @@
         <h5>ID</h5>
       </th>
       <th scope="col">
+        <h5>ADMIN NAME</h5>
+      </th>
+      <th scope="col">
         <h5>CUSTOMER NAME</h5>
       </th>
       <th scope="col">
@@ -41,6 +44,7 @@
   <tr class="bg-info">
     <tbody>
       <th scope="row">{{ our_issues.id }}</th>
+      <td>{{ our_issues.adminer }}</td>
       <td>{{ our_issues.issuer }}</td>
       <td>{{ our_issues.orderer }}</td>
       <td>{{ our_issues.date_issued }}</td>
@@ -52,9 +56,12 @@
 
 
   {% else %}
-  <h1>CREATE NEW ORDER</h1>
+  <h1>ORDER</h1>
   <br />
-  <div class="w-25 shadow p-3 mb-5 bg-transparent rounded text-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-4">
+  <div class="w-50 shadow p-3 mb-5 bg-transparent rounded text-light">
     <form method="POST">
       {{ form.hidden_tag() }}
 
@@ -66,19 +73,26 @@
 
       {{ form.book_id(class="form-control") }}
       <br />
+      {{ form.customer_id.label(class="form-label") }}
+
+      {{ form.customer_id(class="form-control") }}
+      <br />
 
       {{ form.submit(class="btn btn-secondary") }}
     </form>
   </div>
-
+</div>
   
-
+<div class="col-8">
   <table class="table w-50 text-light text-center table-center ">
     <h1>ORDERS</h1>
     <thead>
       <tr>
         <th scope="col">
           <h3>ID</h3>
+        </th>
+        <th scope="col">
+          <h3>ADMIN NAME</h3>
         </th>
         <th scope="col">
           <h3>CUSTOMER NAME</h3>
@@ -98,6 +112,7 @@
     <tr class="bg-info">
       <tbody>
         <th scope="row">{{ our_issues.id }}</th>
+        <td>{{ our_issues.adminer }}</td>
         <td>{{ our_issues.issuer }}</td>
         <td>{{ our_issues.orderer }}</td>
         <td>{{ our_issues.date_issued }}</td>
@@ -106,13 +121,51 @@
     </tr>
     </tbody>
     {% endfor %}
+  </div>
+</div>
+</div>
 
 
+  <div class="table-responsive-sm">
+  <table class="table w-100 text-light text-center ">
+    <br/><br/><br/><br/><br/><br/>
+    <h1>CUSTOMERS</h1>
+    <thead>
+      <tr>
+        <th scope="col"><h5>ID</h5></th>
+        <th scope="col"><h5>UPDATE</h5></th>
+        <th scope="col"><h5>NAME</h5></th>
+        <th scope="col"><h5>USERNAME</h5></th>
+        <th scope="col"><h5>CITY</h5></th>
+        <th scope="col"><h5>AGE</h5></th>
+        <th scope="col"><h5>EMAIL</h5></th>
+      </tr>
+    </thead>
+    {% for our_customer in our_customers%}
+    <tr class="bg-info">
+      <tbody>
+        <th scope="row">{{ our_customer.id }}</th>
+        <td><a href="{{ url_for('Update_customer', id=our_customer.id) }}" class="btn btn-success"></a></td>
+        <td>{{ our_customer.name }}</td>
+        <td>{{ our_customer.username }}</td>
+        <td>{{ our_customer.city }}</td>
+        <td>{{ our_customer.age }}</td>
+        <td>{{ our_customer.email }}</td>
+    </tr>
+    </tbody>
+    {% endfor %}
+  </table>
+</div>
+<br/><br/><br/>
+</div>
 
+    
 
 
     <table class="table w-100 text-light text-center ">
+      
       <thead>
+        
         <tr>
           <th scope="col">
             <h5>ID</h5>
@@ -163,5 +216,7 @@
       </tr>
       {% endfor %}
     </table>
+  </div>
+</div>
     {% endif %}
     {% endblock %}

@@ -26,7 +26,7 @@
       <a class="div-text text-light">
         <div class="container">
           <div class="row">
-            <div class="col text-center">
+            <div class="col text-center"><h2>
         <strong>Name: </strong>{{ current_user.name }}<br/>
         <strong>Username: </strong>{{ current_user.username }}<br/>
         <strong>Customer ID: </strong>{{ current_user.id }}<br/>
@@ -34,7 +34,7 @@
         <strong>Age: </strong>{{ current_user.age }}<br/>
         <strong>Email: </strong>{{ current_user.email }}<br/>
         <strong>Date Joined: </strong>{{ current_user.date_added }}<br/>
-      </a>
+      </a></h2>
       <a href="{{ url_for('Update_customer', id=current_user.id) }}" class="btn btn-success">Update</a>
     </div>
     <div class="col-sm-4" >
@@ -50,6 +50,7 @@
 
 <div class="container2">
   <h1>CUSTOMERS</h1>
+  <div class="table-responsive-sm">
   <table class="table w-100 text-light text-center ">
     <thead>
       <tr>
@@ -76,9 +77,11 @@
     </tbody>
     {% endfor %}
   </table>
+</div>
 <br/><br/><br/>
   
 <h1>BOOKS</h1>
+<div class="table-responsive-sm"></div>
   <table class="table w-100 text-light text-center ">
     <thead>
       <tr>
@@ -103,25 +106,28 @@
     {% endfor %}
   </table>
   <br/><br/><br/>
-<table class="table w-100 text-light text-center ">
-  
   <h1>ORDERS</h1>
+  <div class="table-responsive-sm">
+<table class="table w-100 text-light text-center ">
   <thead>
     <tr>
       <th scope="col">
-        <h3>ID</h3>
+        <h5>ID</h5>
       </th>
       <th scope="col">
-        <h3>CUSTOMER NAME</h3>
+        <h5>ADMIN NAME</h5>
       </th>
       <th scope="col">
-        <h3>BOOK TITLE</h3>
+        <h5>CUSTOMER NAME</h5>
       </th>
       <th scope="col">
-        <h3>DATE ISSUED</h3>
+        <h5>BOOK TITLE</h5>
       </th>
       <th scope="col">
-        <h3>DATE RETURN</h3>
+        <h5>DATE ISSUED</h5>
+      </th>
+      <th scope="col">
+        <h5>DATE RETURN</h5>
       </th>
     </tr>
   </thead>
@@ -129,6 +135,7 @@
   <tr class="bg-info">
     <tbody>
       <th scope="row">{{ our_issues.id }}</th>
+      <td>{{ our_issues.adminer }}</td>
       <td>{{ our_issues.issuer }}</td>
       <td>{{ our_issues.orderer }}</td>
       <td>{{ our_issues.date_issued }}</td>
@@ -136,6 +143,8 @@
       <td><a href="{{ url_for('delete_order', id=our_issues.id) }}" class="btn btn-danger">Return</a></td>
   </tr>
   </tbody>
+</div>
   {% endfor %}
+</table>
 </div>
   {% endblock %}

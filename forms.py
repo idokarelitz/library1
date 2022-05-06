@@ -42,6 +42,7 @@ class OrderForm(FlaskForm):
     
     days_return = IntegerField('How Many Days Will You Like To Have The Book: 2, 5 or 10 Days ', validators=[DataRequired()])
     book_id = IntegerField('Book ID', validators=[DataRequired()])
+    customer_id = IntegerField('Customer ID', validators=[DataRequired()])
     submit = SubmitField('Submit')
  
 class LoginForm(FlaskForm):

@@ -10,7 +10,8 @@ from mydb import db, migrate
 from customer import customer
 from book import book
 from forms import SearchForm, CustomerForm, BookForm, Search2Form, OrderForm, LoginForm
-from models import Customers, Books, Orders
+from models import Customers, Books, Orders, Admins
+
 # Create a Flask Instance
 app = Flask(__name__)
 #add database sqlite
@@ -34,8 +35,8 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 #login
 @login_manager.user_loader
-def load_customer(customer_id):
-    return Customers.query.get(int(customer_id))
+def load_admin(admin_id):
+    return Admins.query.get(int(admin_id))
 
 #pass to nevbar for search bar 
 @app.context_processor
@@ -118,6 +119,31 @@ def Update_customer(id):
     else:
         return render_template ("update_customer.html", form=form, name_to_update=name_to_update, id=id )
           
+          
+@app.route('/update_admin/<int:id>', methods=['GET','POST'])
+@login_required
+def Update_admin(id):
+    form=CustomerForm()
+    name_to_update=Admins.query.get_or_404(id)
+    if request.method=="POST":
+        name_to_update.name=request.form['name']
+        name_to_update.username=request.form['username']
+        name_to_update.city=request.form['city']
+        name_to_update.age=request.form['age']
+        name_to_update.email=request.form['email']
+        try:
+            db.session.commit()
+            flash('Admin Updated Successfully!')
+            our_books=Books.query.order_by(Books.id) 
+            our_admins=Admins.query.order_by(Admins.date_added)
+            return render_template("dashboard.html", form=form, our_books=our_books, our_admins=our_admins )
+
+        except:
+            flash('Error! Try Again')
+            return render_template ("update_admin.html", form=form, name_to_update=name_to_update, id=id )
+    else:
+        return render_template ("update_admin.html", form=form, name_to_update=name_to_update, id=id )
+          
 
 
 #order route
@@ -134,6 +160,8 @@ def order():
             type2=5
             type3=10
             issued_by = current_user.id
+            #issued_to
+            #issued_to=Customers.query.filter_by(customer=form.customer_id.data).first()
             date_issued=datetime.now()
             if form.days_return.data == type1:
                 date_return=date_issued + \
@@ -148,25 +176,27 @@ def order():
                 flash("You Can Only Choose 2,5 or 10 Days!")
                 our_books=Books.query.order_by(Books.id)
                 our_issues=Orders.query.order_by(Orders.date_issued)
-                return render_template("order.html", form=form, id=id, our_issues=our_issues, our_books=our_books)
-            issue_book=Orders(issued_by=issued_by, date_issued=date_issued, date_return=date_return, book=form.book_id.data)
+                our_customers=Customers.query.order_by(Customers.date_added)
+                return render_template("order.html", form=form, id=id, our_issues=our_issues, our_books=our_books,our_customers=our_customers)
+            issue_book=Orders(issued_by=issued_by, date_issued=date_issued, date_return=date_return, book=form.book_id.data, issued_to=form.customer_id.data)
             db.session.add(issue_book)
             db.session.commit()
         else:
             flash("Book Already Issued!")
             our_books=Books.query.order_by(Books.id)
             our_issues=Orders.query.order_by(Orders.date_issued)
-            return render_template("order.html", form=form, id=id, our_issues=our_issues, our_books=our_books)
-        days_return=form.days_return.data
-        form.days_return.data=''
-        form.book_id.data=''
+            our_customers=Customers.query.order_by(Customers.date_added)
+            return render_template("order.html", form=form, id=id, our_issues=our_issues, our_books=our_books,our_customers=our_customers)
+        
         flash("Issued book Successfully!")
         our_books=Books.query.order_by(Books.id)
         our_issues=Orders.query.order_by(Orders.date_issued)
-        return render_template("order.html", form=form, id=id, our_issues=our_issues, our_books=our_books)
+        our_customers=Customers.query.order_by(Customers.date_added)
+        return render_template("order.html", form=form, id=id, our_issues=our_issues, our_books=our_books,our_customers=our_customers)
     our_books=Books.query.order_by(Books.id)
     our_issues=Orders.query.order_by(Orders.date_issued)
-    return render_template("order.html", form=form, id=id, our_issues=our_issues, our_books=our_books)
+    our_customers=Customers.query.order_by(Customers.date_added)
+    return render_template("order.html", form=form, id=id, our_issues=our_issues, our_books=our_books, our_customers=our_customers)
     
 #Delete a order RETURN  
 @app.route('/delete_order/<int:id>')
@@ -195,17 +225,17 @@ def delete_order(id):
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        customer = Customers.query.filter_by(username=form.username.data).first()
-        if customer:
+        admin = Admins.query.filter_by(username=form.username.data).first()
+        if admin:
             #check the hash
-            if check_password_hash(customer.password_hash, form.password.data):
-                login_user(customer)
+            if check_password_hash(admin.password_hash, form.password.data):
+                login_user(admin)
                 
                 return redirect(url_for('dashboard'))
             else:
                 flash("Wrong Password - Try Again")    
         else:
-            flash("That Customer Doesn't Exist")
+            flash("That Admin Doesn't Exist")
     return render_template('login.html', form=form)
 
 #create logout function

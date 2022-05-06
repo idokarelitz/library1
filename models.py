@@ -47,12 +47,37 @@ class Books(db.Model):
 #model for orders
 class Orders(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    issued_by = db.Column(db.Integer, db.ForeignKey("customers.id"))
+    issued_by = db.Column(db.Integer, db.ForeignKey("admins.id"))
     date_issued = db.Column(db.DateTime(), default=None)
     date_return = db.Column(db.DateTime(), default=None)
     book = db.Column(db.Integer, db.ForeignKey("books.id"))
+    issued_to = db.Column(db.Integer, db.ForeignKey("customers.id"))
 
-
-  
+class Admins(db.Model, UserMixin):
+    id        = db.Column(db.Integer, primary_key=True)
+    name      = db.Column(db.String(200), nullable=False)
+    username   = db.Column(db.String(200), nullable=False, unique=True)
+    city      = db.Column(db.String(200), nullable=False)
+    age       = db.Column(db.String(10), nullable=False)
+    email      = db.Column(db.String(200), nullable=False)
+    date_added = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    issue_admin = db.relationship("Orders", backref="adminer", lazy=True)
+    #password hash
+    password_hash= db.Column(db.String(128))
+    #add property
+    #1. message if somthing go wrong
+    @property
+    def password(self):
+       raise AttributeError("password is not a readable attribute") 
+    #2. set the password hash
+    @password.setter
+    def password(self, password):
+        self.password_hash= generate_password_hash(password)
+    #3. check if pass=hash
+    def verify_password(self, password):
+        return check_password_hash(self.password_hash, password)
+        
+    def __repr__(self):
+        return '%r' % self.name 
 
 

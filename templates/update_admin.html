@@ -15,11 +15,11 @@
 
 
 
-
-<h1>Update Customer...</h1>
+{% if id == current_user.id %}
+<h1>Update Admin...</h1>
 <br />
 <div class="w-50 shadow p-3 mb-5 bg-transparent rounded text-light">
-	<form action="/update_customer/{{ name_to_update.id }}" method="POST">
+	<form action="/update_admin/{{ name_to_update.id }}" method="POST">
 		{{ form.hidden_tag() }}
 
 		{{ form.name.label(class="form-label") }}
@@ -46,8 +46,15 @@
 
 		<a href="{{ url_for('dashboard') }}" class="btn btn-danger">Cancel Update</a>
 
-		<a href="{{ url_for('customer.delete_customer', id=id) }}" class="btn btn-danger">Delete</a>	
+		<a href="{{ url_for('customer.delete_admin', id=id) }}" class="btn btn-danger">Delete</a>	
 	</form>
 </div>
-
+{% else %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+	<strong>
+		Sorry! You Cant Edit This Admin
+	</strong>
+	<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
 {% endblock %}
